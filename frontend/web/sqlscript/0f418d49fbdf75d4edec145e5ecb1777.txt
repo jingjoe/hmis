@@ -1,0 +1,11 @@
+select v.hn,concat(pt.pname,pt.fname," ",pt.lname) as full_name,v.age_y,s.name as sex_name,v.aid,pt.informaddr,v.pdx,lh.order_date,li.lab_items_name,lo.lab_items_normal_value_ref,lo.lab_order_result
+from lab_order  lo
+left outer join lab_head lh on lh.lab_order_number=lo.lab_order_number
+left outer join lab_items li on li.lab_items_code=lo.lab_items_code
+left outer join vn_stat v on v.vn=lh.vn
+left outer join patient pt on pt.hn=v.hn
+left outer join sex s on s.code=v.sex
+where  lh.order_date between "2014-10-01" and "2015-09-30"
+and v.pdx like "E11%"
+and lo.lab_items_code in ("256","258","257","259")
+group by v.hn
